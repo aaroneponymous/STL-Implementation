@@ -42,7 +42,7 @@ public:
 
     ~Vector()
     {
-        std::cout << "destructor: ~Vector() {}\n";
+        std::cout << "\ndestructor: ~Vector() {}\n";
 
         clear();
     }
@@ -117,7 +117,7 @@ public:
 
     void reserve(int size)
     {
-        std::cout << "reserve(int size) {}\n";
+        std::cout << "  reserve(int size) {}\n";
         if (size_ < capacity_) return;
 
         if (ptr_ == nullptr)
@@ -211,13 +211,18 @@ Vector<Vector<double>> createAndInsert()
     std::cout << "Vector<Vector<double>> createAndInsert() {}";
     std::cout << "\nVector<Vector<double>> pts\n";
     Vector<Vector<double>> pts;
-    std::cout << "\npts.reserve";
+    std::cout << "\npts.reserve(3)\n";
+    // Within pts.reserve(3) call - ctor: Vector() {} called thrice because Vector<Vector<double>>
     pts.reserve(3);
     std::cout << "\nVector<double> x{ 1.0, 2.0 }\n";
     Vector<double> x{ 1.0, 2.0 };
     std::cout << "\npts.push_back(x)\n";
     pts.push_back(x);
-
+    std::cout << "\npts.push_back(x + x)\n";
+    pts.push_back(x + x);
+    std::cout << "\npts.push_back(x)\n";
+    pts.push_back(x);
+    
     return pts;
 
 }
