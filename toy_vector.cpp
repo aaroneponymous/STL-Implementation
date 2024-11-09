@@ -2,8 +2,7 @@
 #include <stdexcept>
 #include <initializer_list>
 
-// Toy Vector Class to Understand Move Semantics
-// Toy Vector Class follows the Rule of Three
+// Toy Vector Class - Move Semantics
 
 template <typename T>
 class Vector
@@ -14,6 +13,7 @@ private:
     T *ptr_;
 
 public:
+
     // Constructors
 
     Vector() : capacity_{0}, size_{0}, ptr_{nullptr} { std::cout << "\tctor: Vector() {}\n";}
@@ -22,7 +22,7 @@ public:
     {
         std::cout << "\tctor: Vector(int size, T data) {}\n";
 
-        for (int i{0}; i < size; ++i)
+        for (int i{ 0 }; i < size; ++i)
         {
             ptr_[i] = data;
         }
@@ -83,7 +83,7 @@ public:
             size_ = v.size_;
             ptr_ = new T[v.size_];
 
-            for (int i{0}; i < v.size_; i++)
+            for (int i{ 0 }; i < v.size_; i++)
             {
                 ptr_[i] = v.ptr_[i];
             }
@@ -142,6 +142,7 @@ public:
 
     void clear()
     {
+        std::cout << std::boolalpha << "ptr_ not null? " << (ptr_ != nullptr) << "\n";
         if (ptr_ != nullptr)
         {
             delete[] ptr_;
