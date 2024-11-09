@@ -17,7 +17,7 @@ public:
     // Constructors
 
     Vector() : capacity_{0}, size_{0}, ptr_{nullptr} { std::cout << "\tctor: Vector() {}\n";}
-    Vector(int size) : capacity_{size}, size_{size}, ptr_{new T[size]} { std::cout << "\tctor: Vector(int size) {}\n";}
+    Vector(int size) : capacity_{size}, size_{size}, ptr_{new T[size]} { std::cout << "\tctor: Vector(int size) {} | Mem Alloc: ptr_ { new T[size] }\n";}
     Vector(int size, T data) : Vector(size) // ctor constructs vector of size_{size} & initializes all elements as data
     {
         std::cout << "\tctor: Vector(int size, T data) {}\n";
@@ -28,10 +28,11 @@ public:
         }
     }
 
-    Vector(std::initializer_list<T> list) // ctor using initializer_list
+    Vector(std::initializer_list<T> list) : capacity_{static_cast<int>(list.size())}, size_{0}, ptr_{new T[list.size()]} // ctor using initializer_list
     {
         std::cout << "\tctor: Vector(std::initializer_list<T> list) {}\n";
-
+        std::cout << "\t  Mem Alloc: ptr_ = new T[capacity_]\n";
+        
         clear();
 
         for (const T &elem : list)
@@ -60,6 +61,7 @@ public:
 
         capacity_ = v.capacity_;
         size_ = v.size_;
+        std::cout << "\t  Mem Alloc: ptr_ = new T[v.size_]\n";
         ptr_ = new T[v.size_];
 
         for (int i{ 0 }; i < v.size_; i++)
@@ -81,6 +83,8 @@ public:
 
             capacity_ = v.capacity_;
             size_ = v.size_;
+
+            std::cout << "\t  Mem Alloc: ptr_ = new T[v.size_]\n";
             ptr_ = new T[v.size_];
 
             for (int i{ 0 }; i < v.size_; i++)
@@ -126,9 +130,10 @@ public:
             capacity_ = 0;
         }
 
+        std::cout << "\t  Mem Alloc: T* bufferNew = new T[size]\n";
         T* bufferNew = new T[size];
         unsigned int l_size = std::min(capacity_, size);
-        for (int i{ 0 }; i < l_size; i++)
+        for (unsigned int i{ 0 }; i < l_size; i++)
         {
             bufferNew[i] = ptr_[i];
         }
@@ -142,7 +147,6 @@ public:
 
     void clear()
     {
-        std::cout << std::boolalpha << "ptr_ not null? " << (ptr_ != nullptr) << "\n";
         if (ptr_ != nullptr)
         {
             delete[] ptr_;
