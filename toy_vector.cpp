@@ -33,8 +33,6 @@ public:
         std::cout << "\tctor: Vector(std::initializer_list<T> list) {}\n";
         std::cout << "\t  Mem Alloc: ptr_ = new T[capacity_]\n";
         
-        clear();
-
         for (const T &elem : list)
         {
             push_back(elem);
